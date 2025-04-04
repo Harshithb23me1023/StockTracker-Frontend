@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Market System</h1>
+        <div class="form-container">
+            <h2>Add Stock</h2>
+            <input type="text" id="stockSymbol" placeholder="Stock Symbol">
+            <input type="number" id="stockPrice" placeholder="Stock Price">
+            <button onclick="addStock()">Add Stock</button>
+        </div>
+        <div class="form-container">
+            <h2>Search Stock</h2>
+            <input type="text" id="searchSymbol" placeholder="Stock Symbol">
+            <button onclick="searchStock()">Search</button>
+            <p id="searchResult"></p>
+        </div>
+        <h2>Stock List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Stock Symbol</th>
+                    <th>Stock Price</th>
+                </tr>
+            </thead>
+            <tbody id="stockTable">
+                <!-- Stocks will be added here dynamically -->
+            </tbody>
+        </table>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
