@@ -4,36 +4,272 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Market System</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+            --info: #7209b7;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+           text-align: center;
+        }
+        
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+           text-align: center;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            border-bottom: 2px solid var(--accent);
+            padding-bottom: 10px;
+            margin-top: 30px;
+           text-align: center;
+        }
+        
+        .form-container {
+            background: rgba(67, 97, 238, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(67, 97, 238, 0.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        input {
+            padding: 12px 15px;
+            margin: 8px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 200px;
+        }
+        
+        input:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(72, 149, 239, 0.2);
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 8px;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, var(--secondary), var(--primary));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #e9ecef;
+        }
+        
+        th {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        
+        tr:hover {
+            background-color: rgba(72, 149, 239, 0.1);
+            transform: scale(1.01);
+            transition: all 0.2s;
+        }
+        
+        #searchResult {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+        
+        .success {
+            background-color: rgba(76, 201, 240, 0.2);
+            color: #4cc9f0;
+        }
+        
+        .error {
+            background-color: rgba(247, 37, 133, 0.2);
+            color: #f72585;
+        }
+        
+        .stock-change {
+            font-weight: bold;
+        }
+        
+        .up {
+            color: #4cc9f0;
+        }
+        
+        .down {
+            color: #f72585;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Stock Market System</h1>
+        <h1>📈 Stock Market System</h1>
+        
         <div class="form-container">
-            <h2>Add Stock</h2>
-            <input type="text" id="stockSymbol" placeholder="Stock Symbol">
-            <input type="number" id="stockPrice" placeholder="Stock Price">
+            <h2>➕ Add New Stock</h2>
+            <input type="text" id="stockSymbol" placeholder="e.g. AAPL" required>
+            <input type="number" id="stockPrice" placeholder="Price (USD)" step="0.01" min="0" required>
             <button onclick="addStock()">Add Stock</button>
         </div>
+        
         <div class="form-container">
-            <h2>Search Stock</h2>
-            <input type="text" id="searchSymbol" placeholder="Stock Symbol">
+            <h2>🔍 Search Stock</h2>
+            <input type="text" id="searchSymbol" placeholder="Enter symbol">
             <button onclick="searchStock()">Search</button>
             <p id="searchResult"></p>
         </div>
-        <h2>Stock List</h2>
+        
+        <h2>💼 Your Portfolio</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Stock Symbol</th>
-                    <th>Stock Price</th>
+                    <th>Symbol</th>
+                    <th>Price (USD)</th>
+                    <th>Change</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody id="stockTable">
                 <!-- Stocks will be added here dynamically -->
+                <tr>
+                    <td>AAPL</td>
+                    <td>185.64</td>
+                    <td class="stock-change up">+2.5%</td>
+                    <td><button class="delete-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>GOOGL</td>
+                    <td>142.32</td>
+                    <td class="stock-change down">-1.2%</td>
+                    <td><button class="delete-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>MSFT</td>
+                    <td>420.72</td>
+                    <td class="stock-change up">+0.8%</td>
+                    <td><button class="delete-btn">Delete</button></td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <script src="script.js"></script>
+
+    <script>
+        // Sample JavaScript functionality
+        function addStock() {
+            const symbol = document.getElementById('stockSymbol').value;
+            const price = document.getElementById('stockPrice').value;
+            
+            if (symbol && price) {
+                const table = document.getElementById('stockTable');
+                const newRow = table.insertRow();
+                
+                // Generate random change for demo
+                const change = (Math.random() * 5 - 2.5).toFixed(2);
+                const changeClass = change >= 0 ? 'up' : 'down';
+                const changeSymbol = change >= 0 ? '+' : '';
+                
+                newRow.innerHTML = `
+                    <td>${symbol.toUpperCase()}</td>
+                    <td>${parseFloat(price).toFixed(2)}</td>
+                    <td class="stock-change ${changeClass}">${changeSymbol}${change}%</td>
+                    <td><button class="delete-btn" onclick="deleteStock(this)">Delete</button></td>
+                `;
+                
+                // Clear inputs
+                document.getElementById('stockSymbol').value = '';
+                document.getElementById('stockPrice').value = '';
+            }
+        }
+        
+        function searchStock() {
+            const symbol = document.getElementById('searchSymbol').value;
+            const resultElement = document.getElementById('searchResult');
+            
+            if (symbol) {
+                // This would be replaced with actual search logic
+                const found = Math.random() > 0.3; // 70% chance of "finding" for demo
+                
+                if (found) {
+                    const price = (Math.random() * 500 + 50).toFixed(2);
+                    resultElement.textContent = `${symbol.toUpperCase()}: $${price}`;
+                    resultElement.className = 'success';
+                } else {
+                    resultElement.textContent = `Stock ${symbol.toUpperCase()} not found`;
+                    resultElement.className = 'error';
+                }
+            }
+        }
+        
+        function deleteStock(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
 </body>
 </html>
